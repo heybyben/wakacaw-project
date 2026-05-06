@@ -164,6 +164,23 @@ function showPostByPath(path) {
   communityView.style.display = 'none';
   window.scrollTo(0, 0);
   addCursorHover();
+  
+  // Add copy buttons to pre tags
+  const pres = postContentTarget.querySelectorAll('pre');
+  pres.forEach(pre => {
+    const button = document.createElement('button');
+    button.className = 'copy-btn';
+    button.innerText = 'Copy';
+    button.addEventListener('click', () => {
+      const code = pre.querySelector('code');
+      navigator.clipboard.writeText(code.innerText).then(() => {
+        button.innerText = 'Copied!';
+        setTimeout(() => button.innerText = 'Copy', 2000);
+      });
+    });
+    pre.appendChild(button);
+  });
+
   window.location.hash = `view-${btoa(path)}`;
 }
 

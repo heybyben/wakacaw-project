@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
 
 :root {
   --bg-color: #fafafa;
@@ -337,25 +337,167 @@ header {
   margin-bottom: 1.5rem;
   font-size: 1.1rem;
   color: var(--text-secondary);
+  line-height: 1.8;
 }
 
-.markdown-body ul {
+.markdown-body a {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px dashed var(--accent-color);
+  transition: all 0.3s ease;
+}
+
+.markdown-body a:hover {
+  color: var(--text-primary);
+  background: var(--accent-soft);
+  border-bottom-style: solid;
+}
+
+.markdown-body h4 {
+  font-size: 1.1rem;
+  margin: 1.5rem 0 0.75rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  letter-spacing: 0;
+}
+
+.markdown-body ul, .markdown-body ol {
   margin-bottom: 2rem;
-  padding-left: 1.5rem;
+  padding-left: 0;
+  list-style: none;
+  counter-reset: item;
 }
 
 .markdown-body li {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.8rem;
   color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  position: relative;
+  padding-left: 1.8rem;
+}
+
+.markdown-body ol > li::before {
+  content: counter(item) ".";
+  counter-increment: item;
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+  font-weight: 700;
+  font-family: 'Onest', sans-serif;
+  font-size: 1rem;
+}
+
+.markdown-body ul > li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+  font-weight: 900;
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+
+/* Style for list items that act as sub-headers */
+.markdown-body li:has(+ ol), 
+.markdown-body li:has(+ ul) {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 1rem;
+}
+
+.markdown-body li strong {
+  color: var(--text-primary);
+  font-weight: 700;
 }
 
 .markdown-body blockquote {
   border-left: 4px solid var(--accent-color);
-  padding: 1rem 1.5rem;
+  padding: 1.5rem 2rem;
   background: var(--accent-soft);
-  border-radius: 0 12px 12px 0;
-  margin: 2rem 0;
+  border-radius: 16px;
+  margin: 3rem 0;
   font-style: italic;
+  color: var(--text-primary);
+  position: relative;
+}
+
+/* Code Blocks */
+.markdown-body pre {
+  background: #0d0d0d;
+  color: #e0e0e0;
+  padding: 2rem 1.5rem 1.5rem;
+  border-radius: 20px;
+  overflow-x: auto;
+  margin: 2rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.markdown-body pre::before {
+  content: 'Terminal / Bash';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.4rem 1.2rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-family: 'Onest', sans-serif;
+  font-weight: 600;
+}
+
+.markdown-body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.markdown-body p code {
+  background: var(--accent-soft);
+  color: var(--accent-color);
+  padding: 0.2rem 0.6rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Copy Button */
+.copy-btn {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.8rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.65rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s;
+  font-family: 'Onest', sans-serif;
+  font-weight: 700;
+  z-index: 10;
+}
+
+.markdown-body pre:hover .copy-btn {
+  opacity: 1;
+}
+
+.copy-btn:hover {
+  background: var(--accent-color);
+}
+
+[data-theme="dark"] .markdown-body pre {
+  background: #000000;
+  border-color: #222;
 }
 
 .post-card-content {
@@ -367,16 +509,48 @@ header {
 
 /* Alert Boxes */
 .alert {
-  padding: 1.2rem 1.5rem;
-  border-radius: 12px;
-  margin: 1.5rem 0;
+  padding: 1.25rem 1.75rem;
+  border-radius: 18px;
+  margin: 2rem 0;
   font-weight: 500;
+  display: flex;
+  flex-wrap: wrap; /* Allow stacking */
+  align-items: center;
+  gap: 0.75rem;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  backdrop-filter: blur(8px);
 }
 
 .alert-danger {
-  background-color: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  background-color: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.15);
   color: #ef4444;
+  box-shadow: 0 10px 30px rgba(239, 68, 68, 0.05);
+}
+
+.alert strong {
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  background: #ef4444;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 8px;
+  flex-shrink: 0; /* Don't squash the badge */
+}
+
+@media (max-width: 600px) {
+  .alert {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+  
+  .alert strong {
+    margin-right: 0;
+  }
 }
 
 .post-meta {

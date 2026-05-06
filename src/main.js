@@ -71,7 +71,8 @@ async function renderPosts(limit = 6) {
     const postsData = Object.entries(markdownFiles).map(([path, text]) => {
       const { metadata } = parseMarkdown(text);
       const cleanPath = path.replace('./', '/src/');
-      return { ...metadata, path: cleanPath, originalPath: path };
+      const slug = path.split('/').pop().replace('.md', '');
+      return { ...metadata, path: cleanPath, originalPath: path, slug };
     });
 
     allPosts = postsData
@@ -87,7 +88,7 @@ async function renderPosts(limit = 6) {
   }
 
   postsList.innerHTML = postsToShow.map(post => `
-    <article class="post-card" data-path="${post.originalPath}">
+    <article class="post-card" data-slug="${post.slug}">
       <div class="post-card-image">
         <img src="${fixImagePath(post.image)}" alt="${post.title}" style="width: 100%; height: 100%; object-fit: cover; transition: 0.5s;">
       </div>
@@ -118,7 +119,7 @@ async function renderPosts(limit = 6) {
   }
 
   document.querySelectorAll('.post-card').forEach(card => {
-    card.addEventListener('click', () => showPostByPath(card.getAttribute('data-path')));
+    card.addEventListener('click', () => showPostBySlug(card.getAttribute('data-slug')));
   });
 
   addCursorHover();
@@ -132,7 +133,11 @@ viewAllBtn.addEventListener('click', () => {
   }
 });
 
-function showPostByPath(path) {
+function showPostBySlug(slug) {
+  // Find the original path from slug
+  const path = Object.keys(markdownFiles).find(p => p.split('/').pop().replace('.md', '') === slug);
+  if (!path) return;
+  
   const text = markdownFiles[path];
   if (!text) return;
 
@@ -181,7 +186,7 @@ function showPostByPath(path) {
     pre.appendChild(button);
   });
 
-  window.location.hash = `view-${btoa(path)}`;
+  window.location.hash = `post/${slug}`;
 }
 
 function showCommunity() {
@@ -226,8 +231,13 @@ window.addEventListener('mousemove', (e) => {
 
 function handleRouting() {
   const hash = window.location.hash;
-  if (hash.startsWith('#view-')) {
-    showPostByPath(atob(hash.replace('#view-', '')));
+  if (hash.startsWith('#post/')) {
+    showPostBySlug(hash.replace('#post/', ''));
+  } else if (hash.startsWith('#view-')) {
+    // Legacy support
+    const path = atob(hash.replace('#view-', ''));
+    const slug = path.split('/').pop().replace('.md', '');
+    showPostBySlug(slug);
   } else if (hash === '#community') {
     showCommunity();
   } else {

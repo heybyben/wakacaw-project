@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>wakacaw-project</title>
+  <meta name="description" content="Personal space of wakacaw. Thinkers x Doers.">
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <a href="/" class="logo" id="home-link">wkcwprjct.</a>
+      <nav class="nav-links">
+        <a href="#builds">Builds</a>
+        <a href="#community">Community</a>
+        <button class="theme-toggle" id="theme-toggle"
+          style="background: none; border: none; cursor: pointer; color: var(--text-primary);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5" />
+            <path
+              d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+          </svg>
+        </button>
+      </nav>
+    </header>
+
+    <div class="side-socials">
+      <a href="https://t.me/heybyben" target="_blank">telegram</a>
+      <a href="https://github.com/heybyben" target="_blank">github</a>
+      <a href="mailto:heybyben@gmail.com" target="_blank">email</a>
+    </div>
+
+    <main id="main-content">
+      <!-- Landing Section -->
+      <section id="home-view" class="view-section">
+        <div class="landing">
+          <div class="planet planet-1"></div>
+          <div class="planet planet-2"></div>
+          <div class="planet planet-3"></div>
+          <h1>wakacaw project</h1>
+          <p>is a private space dedicated to Android projects and development, <br>where ideas are built, tested, and continuously improved.</p>
+          <div class="scroll-indicator">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="container content-section" id="builds">
+          <h2 class="section-title">Latest Builds</h2>
+          <div class="posts-list" id="posts-list">
+            <!-- Posts will be injected here -->
+          </div>
+          <div id="view-all-container" style="text-align: center; margin-top: 4rem; display: none;">
+            <button id="view-all-btn" class="btn btn-outline">View All Projects</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Post Detail View -->
+      <section id="post-view" class="post-detail container view-section">
+        <a href="#" class="back-link" id="back-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+          Back to builds
+        </a>
+        <div id="post-content-target">
+          <!-- Post content will be injected here -->
+        </div>
+      </section>
+
+      <!-- Community View -->
+      <section id="community-view" class="container view-section" style="display: none; padding-top: 120px; min-height: 80vh;">
+        <div class="community-hero" style="text-align: center; margin-bottom: 4rem;">
+          <h1 class="community-title">Our Community</h1>
+          <p style="color: var(--text-secondary); font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Connect with developers and users from around the world. Choose your platform below.</p>
+        </div>
+        
+        <div class="community-grid">
+          <a href="https://t.me/wkcwproject_ch" target="_blank" class="community-card">
+            <div class="comm-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </div>
+            <h3>Channel Update</h3>
+            <p>Get instant notifications for every new build, security patch, and project announcement.</p>
+            <span class="comm-link">Join Channel →</span>
+          </a>
+
+          <a href="https://t.me/wkcwproject" target="_blank" class="community-card">
+            <div class="comm-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </div>
+            <h3>Support Group</h3>
+            <p>The place to discuss, report bugs, share setups, and get help from the community.</p>
+            <span class="comm-link">Join Discussion →</span>
+          </a>
+        </div>
+
+        <div style="text-align: center; margin: 6rem 0;">
+           <a href="#" class="back-link" id="comm-back-btn">
+             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+             Back to Universe
+           </a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-content">
+        <div class="footer-brand">wkcwprjct.</div>
+        <div class="footer-info">
+          <p>Handcrafted with passion by <strong>heybyben</strong></p>
+          <p class="copyright">&copy; 2026 All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <div class="cursor-dot"></div>
+  <div class="cursor-outline"></div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

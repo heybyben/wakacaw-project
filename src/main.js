@@ -16,10 +16,12 @@ const viewAllBtn = document.getElementById('view-all-btn');
 const cursorDot = document.querySelector('.cursor-dot');
 const cursorOutline = document.querySelector('.cursor-outline');
 
+const BASE_URL = import.meta.env.BASE_URL || '/';
+const SITE_TITLE = "Wakacaw Project | heybyben";
+
 const markdownFiles = import.meta.glob('./posts/**/*.md', { query: '?raw', import: 'default', eager: true });
 
 function parseMarkdown(text) {
-  // Added [\s\uFEFF]* to handle hidden Byte Order Mark (BOM) from Windows/PowerShell
   const frontmatterRegex = /^[\s\uFEFF]*---([\s\S]*?)---/;
   const match = text.match(frontmatterRegex);
   const metadata = {};
@@ -38,6 +40,15 @@ function parseMarkdown(text) {
   return { metadata, content };
 }
 
+function fixImagePath(path) {
+  if (!path) return '';
+  if (path.startsWith('http')) return path;
+  if (path.startsWith('/')) {
+    return (BASE_URL + path.substring(1)).replace(/\/+/g, '/');
+  }
+  return path;
+}
+
 const toggleTheme = () => {
   const currentTheme = document.documentElement.getAttribute('data-theme');
   const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -45,7 +56,7 @@ const toggleTheme = () => {
   localStorage.setItem('theme', newTheme);
 };
 
-const savedTheme = localStorage.getItem('theme') || 
+const savedTheme = localStorage.getItem('theme') ||
   (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 document.documentElement.setAttribute('data-theme', savedTheme);
 themeToggle.addEventListener('click', toggleTheme);
@@ -55,11 +66,11 @@ let isExpanded = false;
 
 async function renderPosts(limit = 6) {
   if (!postsList) return;
-  
+
   if (allPosts.length === 0) {
     const postsData = Object.entries(markdownFiles).map(([path, text]) => {
       const { metadata } = parseMarkdown(text);
-      const cleanPath = path.replace('./', '/src/'); 
+      const cleanPath = path.replace('./', '/src/');
       return { ...metadata, path: cleanPath, originalPath: path };
     });
 
@@ -78,7 +89,7 @@ async function renderPosts(limit = 6) {
   postsList.innerHTML = postsToShow.map(post => `
     <article class="post-card" data-path="${post.originalPath}">
       <div class="post-card-image">
-        <img src="${post.image}" alt="${post.title}" style="width: 100%; height: 100%; object-fit: cover; transition: 0.5s;">
+        <img src="${fixImagePath(post.image)}" alt="${post.title}" style="width: 100%; height: 100%; object-fit: cover; transition: 0.5s;">
       </div>
       <div class="post-card-content">
         <div class="post-meta">
@@ -109,7 +120,7 @@ async function renderPosts(limit = 6) {
   document.querySelectorAll('.post-card').forEach(card => {
     card.addEventListener('click', () => showPostByPath(card.getAttribute('data-path')));
   });
-  
+
   addCursorHover();
 }
 
@@ -138,14 +149,16 @@ function showPostByPath(path) {
     <h1 class="post-detail-title">${metadata.title || 'Project Details'}</h1>
     
     ${metadata.image ? `<div class="post-detail-banner">
-      <img src="${metadata.image}" alt="${metadata.title}">
+      <img src="${fixImagePath(metadata.image)}" alt="${metadata.title}">
     </div>` : ''}
 
     <div class="post-content markdown-body">
       ${htmlContent}
     </div>
   `;
-  
+
+  document.title = `${metadata.title} | Wakacaw Project`;
+
   homeView.style.display = 'none';
   postView.style.display = 'block';
   communityView.style.display = 'none';
@@ -155,6 +168,7 @@ function showPostByPath(path) {
 }
 
 function showCommunity() {
+  document.title = `Community | Wakacaw Project`;
   homeView.style.display = 'none';
   postView.style.display = 'none';
   communityView.style.display = 'block';
@@ -163,6 +177,7 @@ function showCommunity() {
 }
 
 function showHome() {
+  document.title = SITE_TITLE;
   homeView.style.display = 'block';
   postView.style.display = 'none';
   communityView.style.display = 'none';
@@ -204,6 +219,6 @@ function handleRouting() {
 }
 
 window.addEventListener('hashchange', handleRouting);
-handleRouting(); // Handle initial load
+handleRouting();
 
 renderPosts();

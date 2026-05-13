@@ -529,15 +529,29 @@ header {
   box-shadow: 0 10px 30px rgba(239, 68, 68, 0.05);
 }
 
+.alert-danger strong {
+  background: #ef4444;
+}
+
+.alert-success {
+  background-color: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+  box-shadow: 0 10px 30px rgba(34, 197, 94, 0.05);
+}
+
+.alert-success strong {
+  background: #22c55e;
+}
+
 .alert strong {
   text-transform: uppercase;
   font-size: 0.7rem;
   letter-spacing: 1px;
-  background: #ef4444;
   color: #fff;
   padding: 4px 10px;
   border-radius: 8px;
-  flex-shrink: 0; /* Don't squash the badge */
+  flex-shrink: 0;
 }
 
 @media (max-width: 600px) {
